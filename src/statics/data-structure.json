@@ -1,0 +1,14 @@
+{
+  "users": {
+    "USERSID1": {
+      "address": "Iligan City",
+      "contact": "0956878975",
+      "contact1": 2232472,
+      "email": "gaisanoiligan@gmail.com",
+      "level": "Level III",
+      "name": "Gaisano Mall Iligan",
+      "type": "Mall",
+      "online": true
+    }
+  }
+}
