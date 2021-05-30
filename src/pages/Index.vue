@@ -20,7 +20,8 @@
         <q-btn color="teal-10" rounded icon="camera_alt" label="Read QRCode"
           class="full-width" size="lg" @click="turnCameraOn()"
           v-show="!showCamera"/>
-
+          <pre id ="object">
+          </pre>
           <p class="text-subtitle1" v-if="result">Last result: <b>{{ result }}</b></p>
           <div v-if="showCamera">
             <qrcode-stream :camera="camera" @decode="onDecode">
@@ -35,6 +36,7 @@
 </style>
 
 <script>
+import { firebaseDb } from 'src/boot/firebase'
 import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
   name: 'PageIndex',
@@ -54,6 +56,14 @@ export default {
   },
   methods: {
     async onDecode (content) {
+      content = content.split(',')
+      firebaseDb.ref('customers').push({
+        date: Date.now(),
+        contact: content[3],
+        address: content[2],
+        age: content[1],
+        name: content[0]
+      })
       this.result = content
       this.turnCameraOff()
     },
@@ -68,6 +78,7 @@ export default {
       this.showCamera = false
     }
   }
+
 }
 </script>
 
