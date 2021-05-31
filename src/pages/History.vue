@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { firebaseDb } from 'src/boot/firebase'
 export default {
   data () {
     return {
@@ -77,6 +78,19 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+  },
+  mounted () {
+    var rooms = []
+    var roomsRef = firebaseDb.ref('rooms')
+    roomsRef.once('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        var room = childSnapshot.val()
+        rooms.push({ name: room.room_num, date: room.teacher, timein: room.time_in, logout: room.time_out })
+      })
+    })
+    this.data = rooms
   }
 }
 </script>

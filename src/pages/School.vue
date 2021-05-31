@@ -17,7 +17,7 @@
           <q-input
             bg-color="grey-4"
             filled
-            v-model="formData.name"
+            v-model="formData.room_no"
             label="Input Room Number *"
           />
 
@@ -26,14 +26,14 @@
         <q-input
             bg-color="grey-4"
             filled
-            v-model="formData.name"
+            v-model="formData.time_in"
             label="Time In *"
           /></div>
         <div class="q-pa-xs">
         <q-input
             bg-color="grey-4"
             filled
-            v-model="formData.name"
+            v-model="formData.time_out"
             label="Time Out *"
           /></div>
         </div>
@@ -41,12 +41,12 @@
         <q-input
             bg-color="grey-4"
             filled
-            v-model="formData.name"
+            v-model="formData.teacher"
             label="Teacher *"
           />
 
 <div class="q-pa-xs">
-        <q-btn  style="width:100px;height:40px;" color="teal-10" unelevated size="md" label="Update" />
+        <q-btn  style="width:100px;height:40px;" color="teal-10" unelevated size="md" label="Update" @click="addRoom()"/>
 </div>
           </q-form>
          </q-card-section>
@@ -65,15 +65,28 @@
 </template>
 
 <script>
-
+import { firebaseDb } from 'src/boot/firebase'
 export default {
   name: 'SignupPage.vue',
   data () {
     return {
       step: 1,
       formData: {
-        name: ''
+        room_no: '',
+        time_in: '',
+        time_out: '',
+        teacher: ''
       }
+    }
+  },
+  methods: {
+    addRoom () {
+      firebaseDb.ref('rooms').push({
+        room_num: this.formData.room_no,
+        time_in: this.formData.time_in,
+        time_out: this.formData.time_out,
+        teacher: this.formData.teacher
+      })
     }
   }
 }
