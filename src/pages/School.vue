@@ -45,6 +45,8 @@
             label="Teacher *"
           />
 
+        <p class="text-subtitle1" v-if="result"><b>{{ result }}</b></p>
+
 <div class="q-pa-xs">
         <q-btn  style="width:100px;height:40px;" color="teal-10" unelevated size="md" label="Update" @click="addRoom()"/>
 </div>
@@ -70,6 +72,7 @@ export default {
   name: 'SignupPage.vue',
   data () {
     return {
+      result: null,
       step: 1,
       formData: {
         room_no: '',
@@ -87,6 +90,11 @@ export default {
         time_out: this.formData.time_out,
         teacher: this.formData.teacher
       })
+      this.formData.room_no = ''
+      this.formData.time_in = ''
+      this.formData.time_out = ''
+      this.formData.teacher = ''
+      this.result = 'New Room Added'
     }
   }
 }

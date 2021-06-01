@@ -105,12 +105,26 @@ export default {
       ],
       data3: [
         {
-          name1: '167,951,168',
-          name2: 'No Data',
+          name1: '',
+          name2: '',
           name3: '3,488,242'
         }
       ]
     }
+  },
+  methods: {
+    async fetchCovidData () {
+      const res = await fetch('https://api.covid19api.com/summary')
+      const data = await res.json()
+      return data
+    }
+  },
+  async created () {
+    const data = await this.fetchCovidData()
+    console.log(data)
+    this.data3[0].name1 = data.Global.TotalConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    this.data3[0].name2 = data.Global.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    this.data3[0].name3 = data.Global.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
 }
 </script>
