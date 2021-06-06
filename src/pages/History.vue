@@ -1,7 +1,6 @@
 <template>
     <q-page class="container">
 
-     <div v-if="!showCamera">
      <div>
         <div class="q-pa-xs">
             <q-img src="~assets/z.png" />
@@ -26,57 +25,27 @@
     <template v-slot:body="props">
         <q-tr :props="props">
           <q-td
-            v-for="(col) in props.cols"
+            v-for="col in props.cols"
             :key="col.name"
             :props="props"
           >
             {{ col.value }}
           </q-td>
-          <q-btn @click="qrRoom(props.row), turnCameraOn()">QR Scan</q-btn>
+            <q-btn @click="$router.replace('/RoomScan')">QR Scan</q-btn>
         </q-tr>
       </template>
     </q-table>
   </div>
 </div>
-    <q-dialog
-      v-model="small"
-    >
-      <q-card style="width: 300px">
-        <q-card-section>
-          <div class="text-h6">Added</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          {{ result }}
-        </q-card-section>
-
-        <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="OK" v-close-popup />
-        </q-card-actions>
-      </q-card>
-  </q-dialog>
-</div>
-
-  <div v-if="showCamera">
-    <qrcode-stream :camera="camera" @decode="onDecode">
-    </qrcode-stream>
-  </div>
   </q-page>
 </template>
 
 <script>
 import { firebaseDb } from 'src/boot/firebase'
-import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
   name: 'PageIndex',
-  components: { QrcodeStream },
   data () {
     return {
-      small: false,
-      isValid: undefined,
-      camera: 'auto',
-      result: null,
-      showCamera: false,
       search: '',
       columns: [
         {
@@ -89,13 +58,9 @@ export default {
         },
         { name: 'timein', label: 'Time In', field: 'timein' },
         { name: 'logout', label: 'Time Out', field: 'logout' },
-        { name: 'date', label: 'Teacher', field: 'date', align: 'center' }
+        { name: 'date', label: 'Teacher', field: 'date', align: 'center' },
+        { name: 'key', label: 'Key', field: 'key', align: 'center' }
       ],
-
-      keys: [{ id: '' }],
-
-      chosenEST: '',
-
       data: [
         // {
         //   name: 'COE 302',
@@ -130,55 +95,18 @@ export default {
       ]
     }
   },
-  computed: {
-    textInfo () {
-      return this.showCamera ? 'position the qrcode on the camera' : 'Press the button and scan a qrcode.'
-    }
-  },
   methods: {
-    qrRoom (key) {
-      this.chosenEST = this.data[this.data.indexOf(key)].id
-    },
-
-    async onDecode (content) {
-      content = content.split('|')
-      firebaseDb.ref('rooms/' + this.chosenEST + '/students').push({
-        date: Date.now(),
-        contact: content[3],
-        address: content[2],
-        age: content[1],
-        name: content[0]
-      })
-      this.result = content
-      this.small = true
-      this.turnCameraOff()
-    },
-
-    turnCameraOn () {
-      this.camera = 'auto'
-      this.showCamera = true
-    },
-
-    turnCameraOff () {
-      this.camera = 'off'
-      this.showCamera = false
-    }
   },
   mounted () {
-    this.chosenEST = ''
     var rooms = []
-    var keys = []
     var roomsRef = firebaseDb.ref('rooms')
     roomsRef.once('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
         var room = childSnapshot.val()
-        rooms.push({ name: room.room_num, date: room.teacher, timein: room.time_in, logout: room.time_out, id: childSnapshot.key })
-        keys.push({ id: childSnapshot.key })
+        rooms.push({ name: room.room_num, date: room.teacher, timein: room.time_in, logout: room.time_out, key: childSnapshot.key })
       })
     })
-    this.keys = keys
     this.data = rooms
   }
 }
-
 </script>
