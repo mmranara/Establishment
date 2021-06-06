@@ -17,7 +17,6 @@ const routes = [
       { path: '/school', component: () => import('pages/School.vue') },
       { path: '/history', component: () => import('pages/History.vue') },
       { path: '/Draft', component: () => import('pages/z.vue') },
-      { path: '/RoomScan', component: () => import('pages/roomReg.vue') }
     ]
   }
 ]
