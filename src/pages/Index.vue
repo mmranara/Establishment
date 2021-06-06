@@ -18,10 +18,8 @@
           {{ textInfo }}
         </span>
         <q-btn color="teal-10" rounded icon="camera_alt" label="Read QRCode"
-          class="full-width" size="lg" @click="turnCameraOn()"
+          class="full-width" size=" lg" @click="turnCameraOn()"
           v-show="!showCamera"/>
-          <pre id ="object">
-          </pre>
           <p class="text-subtitle1" v-if="result">Last result: <b>{{ result }}</b></p>
           <div v-if="showCamera">
             <qrcode-stream :camera="camera" @decode="onDecode">
@@ -56,6 +54,7 @@ export default {
   },
   methods: {
     async onDecode (content) {
+      alert(content)
       content = content.split(',')
       firebaseDb.ref('customers').push({
         date: Date.now(),

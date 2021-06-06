@@ -80,7 +80,6 @@ const actions = {
       }
     })
   },
-
   firebaseUpdateUser (importantThing = {}, payload) {
     if (payload.userId) {
       firebaseDb.ref('users/' + payload.userId).update(payload.updates)
@@ -88,7 +87,7 @@ const actions = {
   }
 }
 const getters = {
-
+  // getUser Role
 }
 
 export default {

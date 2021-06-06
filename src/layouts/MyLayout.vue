@@ -16,7 +16,7 @@
           <q-img src="~assets/logo.png" style="width:40px"></q-img>
         </q-toolbar-title>
 
-                <q-btn
+        <q-btn
             outline
             rounded
             v-if="!userDetails.userId"
@@ -47,7 +47,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       :width="220"
-   >
+    >
       <q-list>
         <q-item clickable class="bg-teal-10" style="height:50px;">
           <q-item-section class="text-grey-3">
