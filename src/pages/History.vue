@@ -32,7 +32,11 @@
           >
             {{ col.value }}
           </q-td>
-          <q-btn @click="qrRoom(props.row), turnCameraOn()">QR Scan</q-btn>
+          <q-td>
+            <q-btn color = "teal" icon = "camera_alt" @click="qrRoom(props.row), turnCameraOn()">
+              QR Scan
+            </q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -47,7 +51,10 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{ result }}
+          {{ 'Name: ' + result.name }}
+          {{ 'Age: ' + result.age }}
+          {{ 'Address: ' + result.address }}
+          {{ 'Contact: ' + result.contact }}
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -75,7 +82,7 @@ export default {
       small: false,
       isValid: undefined,
       camera: 'auto',
-      result: null,
+      result: {},
       showCamera: false,
       search: '',
       columns: [
@@ -89,7 +96,8 @@ export default {
         },
         { name: 'timein', label: 'Time In', field: 'timein' },
         { name: 'logout', label: 'Time Out', field: 'logout' },
-        { name: 'date', label: 'Teacher', field: 'date', align: 'center' }
+        { name: 'date', label: 'Teacher', field: 'date', align: 'center' },
+        { label: '', align: 'left' }
       ],
 
       keys: [{ id: '' }],
@@ -142,6 +150,7 @@ export default {
 
     async onDecode (content) {
       content = content.split('|')
+      let result = []
       firebaseDb.ref('rooms/' + this.chosenEST + '/students').push({
         date: Date.now(),
         contact: content[3],
@@ -149,7 +158,9 @@ export default {
         age: content[1],
         name: content[0]
       })
-      this.result = content
+      result.push({ name: content[0], age: content[1], address: content[2], contact: content[3] })
+      alert(result.name)
+      this.result = result
       this.small = true
       this.turnCameraOff()
     },

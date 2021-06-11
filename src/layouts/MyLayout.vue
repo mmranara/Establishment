@@ -56,7 +56,7 @@
           <q-img src="~assets/lol.png" class="menu-image absolute-top"  />
         </q-item>
 
-        <q-item clickable to="/index" exact>
+        <q-item clickable to="/index" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="camera_alt" />
           </q-item-section>
@@ -66,7 +66,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/stat" exact>
+        <q-item clickable to="/stat" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="poll" />
           </q-item-section>
@@ -76,7 +76,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/school" exact>
+        <q-item clickable to="/school" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>
@@ -86,7 +86,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/draft" exact>
+        <q-item clickable to="/draft" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="papers" />
           </q-item-section>
