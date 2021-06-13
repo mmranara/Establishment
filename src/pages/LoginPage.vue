@@ -16,13 +16,13 @@
                   @submit="onSubmit"
                   class="q-px-sm q-pt-sm">
 
-              <q-input v-model="formData.email" type="email" label="Email">
+              <q-input v-model="formData.email" color="teal" type="email" label="Email">
                 <template v-slot:prepend>
                   <q-icon name="mail" />
                 </template>
               </q-input>
 
-              <q-input v-model="formData.password" label="Password" :type="isPwd ? 'password' : 'text'">
+              <q-input v-model="formData.password" color="teal" label="Password" :type="isPwd ? 'password' : 'text'">
                 <template v-slot:prepend>
                     <q-icon name="lock" />
                 </template>

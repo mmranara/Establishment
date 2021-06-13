@@ -9,7 +9,8 @@ module.exports = function (ctx) {
       'firebase',
       'i18n',
       'axios',
-      'qriously'
+      'qriously',
+      'apex'
     ],
 
     css: [

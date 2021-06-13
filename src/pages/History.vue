@@ -46,15 +46,30 @@
       v-model="small"
     >
       <q-card style="width: 300px">
-        <q-card-section>
+        <q-card-section class="justify-center">
           <div class="text-h6">Added</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{ 'Name: ' + result.name }}
-          {{ 'Age: ' + result.age }}
-          {{ 'Address: ' + result.address }}
-          {{ 'Contact: ' + result.contact }}
+          <q-list>
+
+            <q-item>
+              <q-item-section>{{ 'Name: ' + result[0] }}</q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>{{ 'Age: ' + result[1] }}</q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>{{ 'Address: ' + result[2] }}</q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>{{ 'Contact Number: ' + result[3] }}</q-item-section>
+            </q-item>
+
+          </q-list>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -150,7 +165,6 @@ export default {
 
     async onDecode (content) {
       content = content.split('|')
-      let result = []
       firebaseDb.ref('rooms/' + this.chosenEST + '/students').push({
         date: Date.now(),
         contact: content[3],
@@ -158,9 +172,7 @@ export default {
         age: content[1],
         name: content[0]
       })
-      result.push({ name: content[0], age: content[1], address: content[2], contact: content[3] })
-      alert(result.name)
-      this.result = result
+      this.result = content
       this.small = true
       this.turnCameraOff()
     },

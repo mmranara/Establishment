@@ -1,13 +1,50 @@
 <template>
   <q-page class="row justify-center items-center">
+
+    <q-card class="">
+
+      <div class="text-h5 q-ma-md row justify-center items-center">{{ userDetails.name }}</div>
+
+      <div
+        class="row q-col-gutter-md q-px-md q-py-md"
+        key="allCharts"
+      >
+        <q-card class="q-ma-md q-pa-xl">
+          <div class="col-md-6 col-sm-12 col-xs-12">
+              <apex-donut :options="options" :series="series"></apex-donut>
+          </div>
+        </q-card>
+
+        <q-card class="q-ma-md q-pa-xl">
+          <div class="col-md-6 col-sm-12 col-xs-12">
+              <apex-area></apex-area>
+          </div>
+        </q-card>
+      </div>
+    </q-card>
   </q-page>
 </template>
 
 <script>
+import CardBase from 'components/CardBase'
+import { mapState, mapActions } from 'vuex'
 export default {
+  components: {
+    ApexArea: () => import('components/ApexArea'),
+    ApexDonut: () => import('components/ApexDonut')
+  },
   data () {
     return {
-
+      options: {},
+      series: [44, 55, 41, 17, 15],
+      loading: true,
+      dialog: true,
+      colors: [
+        'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)',
+        'linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%)',
+        'linear-gradient( 135deg, #FFD3A5 10%, #FD6585 100%)',
+        'linear-gradient( 135deg, #EE9AE5 10%, #5961F9 100%)'
+      ],
       columns1: [
         { field: 'name1', label: 'Confirmed', align: 'center', headerClasses: 'text-red-10' },
         { align: 'center', label: 'Recovered', field: 'name2', headerClasses: 'text-green' },
@@ -46,22 +83,23 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState('store', ['userDetails'])
+  },
   methods: {
-    async fetchCovidData () {
-      const res = await fetch('https://api.covid19api.com/summary')
-      const data = await res.json()
-      return data
-    }
+
   },
   mounted () {
     this.renderChart(this.chartdata, this.options)
   },
-  async created () {
-    const data = await this.fetchCovidData()
-    console.log(data)
-    this.data3[0].name1 = data.Global.TotalConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    this.data3[0].name2 = data.Global.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    this.data3[0].name3 = data.Global.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  created () {
+    this.$q.loading.show({
+      backgroundColor: 'purple-10',
+      delay: 0
+    })
+    setTimeout(() => {
+      this.$q.loading.hide()
+    }, 1300)
   }
 }
 </script>

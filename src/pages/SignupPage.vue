@@ -42,6 +42,7 @@
                   class="q-gutter-md">
 
           <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.name"
@@ -51,6 +52,7 @@
           />
 
             <q-select
+            color="teal"
             bg-color="grey-4"
             filled style=" width:270px;"
             v-model="formData.type"
@@ -58,6 +60,7 @@
             label="Establishment Type *"/>
 
         <q-select
+            color="teal"
             bg-color="grey-4"
             filled style=" width:270px;"
             v-model="formData.level"
@@ -65,6 +68,7 @@
             label="Level *"/>
 
            <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.contact"
@@ -75,6 +79,7 @@
         />
 
          <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.contact1"
@@ -85,6 +90,7 @@
         />
 
        <q-input
+        color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.address"
@@ -95,6 +101,7 @@
          />
 
         <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.email"
@@ -103,7 +110,7 @@
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
 
-        <q-input bg-color="grey-4" v-model="formData.password" filled :type="isPwd1 ? 'password' : 'text'" label="Password *" hint="Combination of letters & numbers">
+        <q-input color="teal" bg-color="grey-4" v-model="formData.password" filled :type="isPwd1 ? 'password' : 'text'" label="Password *" hint="Combination of letters & numbers">
           <template v-slot:append>
             <q-icon
               :name="isPwd1 ? 'visibility_off' : 'visibility'"
