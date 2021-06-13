@@ -57,7 +57,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-
+import { firebaseAuth } from 'src/boot/firebase'
 export default {
   name: 'LoginPage.vue',
   data () {

@@ -131,8 +131,8 @@
               class="text-white"
               label="Continue"
             />
-
             <q-btn to="/" style="width:100px;height:40px;" flat unelevated size="md" label="Back" />
+            <div id="recaptcha-container"></div>
             </q-card-actions>
            </div>
           </q-form>
@@ -140,17 +140,37 @@
        </q-card>
       </div>
     </div>
+
+    <q-dialog v-model="otpConfirm" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Enter OTP</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="otpCode" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Enter" @click="confirmOTP" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
 </q-page>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-
+import { firebaseAuth, firebase } from 'src/boot/firebase'
 export default {
   name: 'SignupPage.vue',
   data () {
     return {
       step: 1,
+      otpConfirm: false,
+      otpCode: '',
       formData: {
         name: '',
         type: '',
@@ -173,10 +193,41 @@ export default {
     }
   },
   methods: {
+    confirmOTP () {
+      alert(this.otpCode)
+      window.confirmationResult.confirm(this.otpCode).then((result) => {
+        // User signed in successfully.
+        this.registerUser(this.formData)
+        alert('Registered')
+        // ...
+      }).catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+        alert(error)
+      })
+    },
     ...mapActions('store', ['registerUser']),
     onSubmit () {
-      this.registerUser(this.formData)
+      firebaseAuth.useDeviceLanguage()
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
+      const phoneNumber = '+63' + this.formData.contact
+      alert(phoneNumber)
+      const appVerifier = window.recaptchaVerifier
+      firebaseAuth.signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult
+          alert('SMS sent')
+          this.otpConfirm = true
+          // ...
+        }).catch((error) => {
+          alert(error)
+        })
+      // this.registerUser(this.formData)
     }
+  },
+  mounted () {
   }
 }
 </script>

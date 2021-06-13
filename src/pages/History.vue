@@ -37,6 +37,9 @@
               QR Scan
             </q-btn>
           </q-td>
+          <q-td>
+            <q-btn flat round color = "red" icon = "delete" @click="deleteRoom(props.row)"/>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -112,6 +115,7 @@ export default {
         { name: 'timein', label: 'Time In', field: 'timein' },
         { name: 'logout', label: 'Time Out', field: 'logout' },
         { name: 'date', label: 'Teacher', field: 'date', align: 'center' },
+        { label: '', align: 'left' },
         { label: '', align: 'left' }
       ],
 
@@ -159,6 +163,11 @@ export default {
     }
   },
   methods: {
+    deleteRoom (key) {
+      let index = this.data.indexOf(key)
+      firebaseDb.ref('rooms/' + key.id).remove()
+      this.data.splice(index, 1)
+    },
     qrRoom (key) {
       this.chosenEST = this.data[this.data.indexOf(key)].id
     },
