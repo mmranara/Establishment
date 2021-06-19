@@ -45,9 +45,9 @@
             label="Teacher *"
           />
 
-<div class="q-pa-xs">
-        <q-btn  style="width:100px;height:40px;" color="teal-10" unelevated size="md" label="Update" @click="addRoom()"/>
-</div>
+          <div class="q-pa-xs">
+            <q-btn  style="width:100px;height:40px;" color="teal-10" unelevated size="md" label="Update" @click="addRoom()"/>
+          </div>
           </q-form>
          </q-card-section>
        </q-card>
@@ -55,9 +55,9 @@
     </div>
 
   <q-footer >
-      <q-tabs class="bg-teal-10" style="height:50px;">
-        <q-route-tab to="/school" label="School Input" style="width:100%;height:60px;"/>
-        <q-route-tab to="/history" label="History"  style="width:100%;height:60px;"/>
+      <q-tabs class="" style="height:50px;">
+        <q-route-tab class="bg-teal-10" to="/school" label="School Input" style="width:100%;height:60px;"/>
+        <q-route-tab class="bg-grey" to="/history" label="History"  style="width:100%;height:60px;"/>
       </q-tabs>
 
   </q-footer>

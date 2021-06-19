@@ -153,7 +153,20 @@
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Enter" @click="confirmOTP" v-close-popup />
+          <q-btn flat label="Enter" @click="confirmOTP()" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="requestSuccess" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Request Successfull</div>
+          <div class="text-h7">You will be updated via sms for your request</div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn color="teal" flat label="Return" @click="$router.replace('/')" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -162,8 +175,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { firebaseAuth, firebase } from 'src/boot/firebase'
+import { firebaseAuth, firebaseDb, firebase } from 'src/boot/firebase'
 export default {
   name: 'SignupPage.vue',
   data () {
@@ -183,6 +195,7 @@ export default {
       },
       isPwd1: true,
       select: null,
+      requestSuccess: false,
       options: [
         'Mall', 'Bank', 'Church', 'City Hall', 'School', 'Market', 'Supermarket', 'Department Store', 'Convenience Store', 'Hotel', 'Hospital', 'Government Office', 'Restaurant', 'Pharmacy/Drugstore', 'Other'
       ],
@@ -193,12 +206,27 @@ export default {
     }
   },
   methods: {
+
+    goBack () {
+      this.requestSuccess = true
+      alert('ASFASFuiaoshfaiUSFHIASUF World')
+    },
+
     confirmOTP () {
-      alert(this.otpCode)
       window.confirmationResult.confirm(this.otpCode).then((result) => {
         // User signed in successfully.
-        this.registerUser(this.formData)
-        alert('Registered')
+        // this.registerUser(this.formData)
+        firebaseDb.ref('requests').push({
+          name: this.formData.name,
+          type: this.formData.type,
+          level: this.formData.level,
+          contact: this.formData.contact,
+          contact1: this.formData.contact1,
+          address: this.formData.address,
+          password: this.formData.password,
+          email: this.formData.email
+        })
+        this.goBack()
         // ...
       }).catch((error) => {
         // User couldn't sign in (bad verification code?)
@@ -206,10 +234,7 @@ export default {
         alert(error)
       })
     },
-    ...mapActions('store', ['registerUser']),
     onSubmit () {
-      firebaseAuth.useDeviceLanguage()
-      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
       const phoneNumber = '+63' + this.formData.contact
       alert(phoneNumber)
       const appVerifier = window.recaptchaVerifier
@@ -228,6 +253,8 @@ export default {
     }
   },
   mounted () {
+    firebaseAuth.useDeviceLanguage()
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
   }
 }
 </script>

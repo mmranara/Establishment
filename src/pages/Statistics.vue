@@ -2,7 +2,6 @@
   <q-page class="row justify-center items-center">
 
     <q-card class="">
-
       <div class="text-h5 q-ma-md row justify-center items-center">{{ userDetails.name }}</div>
 
       <div
@@ -11,7 +10,7 @@
       >
         <q-card class="q-ma-md q-pa-xl">
           <div class="col-md-6 col-sm-12 col-xs-12">
-              <apex-donut :options="options" :series="series"></apex-donut>
+              <apex-donut></apex-donut>
           </div>
         </q-card>
 

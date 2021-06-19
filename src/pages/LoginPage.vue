@@ -75,6 +75,18 @@ export default {
       this.loginUser(this.formData)
     }
   }
+  // mounted () {
+  //   firebaseDb.ref('requests').push({
+  //     name: "D'Morvie",
+  //     type: "",
+  //     level: ,
+  //     contact: ,
+  //     contact1: ,
+  //     address: ,
+  //     password: ,
+  //     email:
+  //   })
+  // }
 }
 </script>
 
