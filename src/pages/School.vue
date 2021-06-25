@@ -56,8 +56,8 @@
 
   <q-footer >
       <q-tabs class="" style="height:50px;">
-        <q-route-tab class="bg-teal-10" to="/school" label="School Input" style="width:100%;height:60px;"/>
-        <q-route-tab class="bg-grey" to="/history" label="History"  style="width:100%;height:60px;"/>
+        <q-route-tab class="bg-teal" to="/school" label="School Input" style="width:100%;height:60px;"/>
+        <q-route-tab class="bg-teal-10" to="/history" label="History"  style="width:100%;height:60px;"/>
       </q-tabs>
 
   </q-footer>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { firebaseDb } from 'src/boot/firebase'
 export default {
   name: 'SignupPage.vue',
@@ -80,9 +81,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState('store', ['userDetails'])
+  },
   methods: {
     addRoom () {
-      firebaseDb.ref('rooms').push({
+      firebaseDb.ref('users/' + this.userDetails.userId + '/rooms').push({
         room_num: this.formData.room_no,
         time_in: this.formData.time_in,
         time_out: this.formData.time_out,

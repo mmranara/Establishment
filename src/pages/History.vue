@@ -10,8 +10,8 @@
      </div>
 
   <q-footer >
-      <q-tabs class="bg-teal-10" style="height:50px;">
-        <q-route-tab to="/school" label="School Input" style="width:100%;height:60px;"/>
+      <q-tabs class="bg-teal" style="height:50px;">
+        <q-route-tab class="bg-teal-10" to="/school" label="School Input" style="width:100%;height:60px;"/>
         <q-route-tab to="/history" label="History"  style="width:100%;height:60px;"/>
       </q-tabs>
   </q-footer>
@@ -92,6 +92,7 @@
 <script>
 import { firebaseDb } from 'src/boot/firebase'
 import { QrcodeStream } from 'vue-qrcode-reader'
+import { mapState } from 'vuex'
 export default {
   name: 'PageIndex',
   components: { QrcodeStream },
@@ -118,8 +119,6 @@ export default {
         { label: '', align: 'left' },
         { label: '', align: 'left' }
       ],
-
-      keys: [{ id: '' }],
 
       chosenEST: '',
 
@@ -160,13 +159,12 @@ export default {
   computed: {
     textInfo () {
       return this.showCamera ? 'position the qrcode on the camera' : 'Press the button and scan a qrcode.'
-    }
+    },
+    ...mapState('store', ['userDetails'])
   },
   methods: {
     deleteRoom (key) {
-      let index = this.data.indexOf(key)
-      firebaseDb.ref('rooms/' + key.id).remove()
-      this.data.splice(index, 1)
+      firebaseDb.ref('users/' + this.userDetails.userId + '/rooms/' + key.id).remove()
     },
     qrRoom (key) {
       this.chosenEST = this.data[this.data.indexOf(key)].id
@@ -174,7 +172,7 @@ export default {
 
     async onDecode (content) {
       content = content.split('|')
-      firebaseDb.ref('rooms/' + this.chosenEST + '/students').push({
+      firebaseDb.ref('users/' + this.userDetails.userId + '/rooms/' + this.chosenEST + '/students').push({
         date: Date.now(),
         contact: content[3],
         address: content[2],
@@ -198,18 +196,14 @@ export default {
   },
   mounted () {
     this.chosenEST = ''
-    var rooms = []
-    var keys = []
-    var roomsRef = firebaseDb.ref('rooms')
-    roomsRef.once('value', function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
+    var ref = firebaseDb.ref('users/' + this.userDetails.userId + '/rooms')
+    ref.on('value', snapshot => {
+      this.data = []
+      snapshot.forEach(childSnapshot => {
         var room = childSnapshot.val()
-        rooms.push({ name: room.room_num, date: room.teacher, timein: room.time_in, logout: room.time_out, id: childSnapshot.key })
-        keys.push({ id: childSnapshot.key })
+        this.data.push({ name: room.room_num, date: room.teacher, timein: room.time_in, logout: room.time_out, id: childSnapshot.key })
       })
     })
-    this.keys = keys
-    this.data = rooms
   }
 }
 

@@ -1,20 +1,32 @@
 <template>
   <q-page class="row justify-center items-center">
 
-    <q-card class="">
-      <div class="text-h5 q-ma-md row justify-center items-center">{{ userDetails.name }}</div>
+    <q-card class="fit">
 
       <div
         class="row q-col-gutter-md q-px-md q-py-md"
         key="allCharts"
       >
-        <q-card class="q-ma-md q-pa-xl">
+
+        <q-card v-if="userDetails.type === 'School'" class="q-ma-md q-pa-xl fit">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <apex-donut-school></apex-donut-school>
+            </div>
+        </q-card>
+
+        <q-card v-else class="q-ma-md q-pa-xl fit">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <apex-donut></apex-donut>
+            </div>
+        </q-card>
+
+        <q-card v-if="userDetails.type === 'School'" class="q-ma-md q-pa-xl fit">
           <div class="col-md-6 col-sm-12 col-xs-12">
-              <apex-donut></apex-donut>
+              <apex-area-school></apex-area-school>
           </div>
         </q-card>
 
-        <q-card class="q-ma-md q-pa-xl">
+        <q-card v-else class="q-ma-md q-pa-xl fit">
           <div class="col-md-6 col-sm-12 col-xs-12">
               <apex-area></apex-area>
           </div>
@@ -30,7 +42,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     ApexArea: () => import('components/ApexArea'),
-    ApexDonut: () => import('components/ApexDonut')
+    ApexAreaSchool: () => import('components/ApexAreaSchool'),
+    ApexDonut: () => import('components/ApexDonut'),
+    ApexDonutSchool: () => import('components/ApexDonutSchool')
   },
   data () {
     return {

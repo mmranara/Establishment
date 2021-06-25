@@ -51,17 +51,21 @@ export default {
     ...mapState('store', ['userDetails'])
   },
   mounted () {
-    var ref = firebaseDb.ref('users/' + this.userDetails.userId + '/customers')
+    var ref = firebaseDb.ref('users/' + this.userDetails.userId + '/rooms')
     ref.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
-        for (let i = 0; i < this.chartOptions.xaxis.categories.length; i++) {
-          if ((new Intl.DateTimeFormat('en', { hour: 'numeric' }).format(childSnapshot.val().date))[0] === this.chartOptions.xaxis.categories[i][0]) {
-            this.series[0].data[i] += 1
-          }
-        }
+        var studentRef = firebaseDb.ref('users/' + this.userDetails.userId + '/rooms/' + childSnapshot.key + '/students')
+        studentRef.on('value', snapshot1 => {
+          snapshot1.forEach(childSnapshot1 => {
+            for (let i = 0; i < this.chartOptions.xaxis.categories.length; i++) {
+              if ((new Intl.DateTimeFormat('en', { hour: 'numeric' }).format(childSnapshot1.val().date))[0] === this.chartOptions.xaxis.categories[i][0]) {
+                this.series[0].data[i] += 1
+              }
+            }
+          })
+        })
       })
     })
-
     this.chartOptions = {
       animations: {
         enabled: true,

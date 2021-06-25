@@ -21,8 +21,7 @@ const actions = {
           contact: payload.contact,
           contact1: payload.contact1,
           address: payload.address,
-          email: payload.email,
-          online: true
+          email: payload.email
         })
       })
       .catch(error => {
@@ -63,7 +62,6 @@ const actions = {
         dispatch('firebaseUpdateUser', {
           userId: userId,
           updates: {
-            online: true
           }
         })
         this.$router.push('/index')
@@ -72,7 +70,6 @@ const actions = {
         dispatch('firebaseUpdateUser', {
           userId: state.userDetails.userId,
           updates: {
-            online: false
           }
         })
         commit('setUserDetails', {})

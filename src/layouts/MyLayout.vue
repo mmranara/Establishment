@@ -56,12 +56,22 @@
           <q-img src="~assets/lol.png" class="menu-image absolute-top"  />
         </q-item>
 
-        <q-item clickable to="/index" exact active-class="text-teal">
+        <q-item v-if="userDetails.type != 'School'" clickable to="/index" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="camera_alt" />
           </q-item-section>
           <q-item-section>
             <q-item-label>QRCode Scan</q-item-label>
+            <q-item-label caption></q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item v-else clickable to="/school" exact active-class="text-teal">
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>School</q-item-label>
             <q-item-label caption></q-item-label>
           </q-item-section>
         </q-item>
@@ -76,15 +86,6 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/school" exact active-class="text-teal">
-          <q-item-section avatar>
-            <q-icon name="school" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>School</q-item-label>
-            <q-item-label caption></q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
     </q-drawer>
 
@@ -110,7 +111,6 @@ export default {
   methods: {
     ...mapActions('store', ['logoutUser'])
   }
-
 }
 </script>
 

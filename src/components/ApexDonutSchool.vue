@@ -54,21 +54,26 @@ export default {
     ...mapState('store', ['userDetails'])
   },
   mounted () {
-    var ref = firebaseDb.ref('users/' + this.userDetails.userId + '/customers')
+    var ref = firebaseDb.ref('users/' + this.userDetails.userId + '/rooms')
     ref.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
-        var room = childSnapshot.val()
-        if (room.age < 18) {
-          this.series[0] += 1
-        } else if (room.age >= 18 && room.age <= 35) {
-          this.series[1] += 1
-        }
-        if (room.age >= 36 && room.age <= 55) {
-          this.series[2] += 1
-        }
-        if (room.age >= 56) {
-          this.series[3] += 1
-        }
+        var studentRef = firebaseDb.ref('users/' + this.userDetails.userId + '/rooms/' + childSnapshot.key + '/students')
+        studentRef.on('value', snapshot1 => {
+          snapshot1.forEach(childSnapshot1 => {
+            let room = childSnapshot1.val()
+            if (room.age < 18) {
+              this.series[0] += 1
+            } else if (room.age >= 18 && room.age <= 35) {
+              this.series[1] += 1
+            }
+            if (room.age >= 36 && room.age <= 55) {
+              this.series[2] += 1
+            }
+            if (room.age >= 56) {
+              this.series[3] += 1
+            }
+          })
+        })
       })
     })
     this.chartOptions = {
