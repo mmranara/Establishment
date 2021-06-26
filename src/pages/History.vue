@@ -72,6 +72,10 @@
               <q-item-section>{{ 'Contact Number: ' + result[3] }}</q-item-section>
             </q-item>
 
+            <q-item>
+              <q-item-section>{{ 'Covid Status: ' + result[4] }}</q-item-section>
+            </q-item>
+
           </q-list>
         </q-card-section>
 
@@ -174,6 +178,7 @@ export default {
       content = content.split('|')
       firebaseDb.ref('users/' + this.userDetails.userId + '/rooms/' + this.chosenEST + '/students').push({
         date: Date.now(),
+        status: content[4],
         contact: content[3],
         address: content[2],
         age: content[1],

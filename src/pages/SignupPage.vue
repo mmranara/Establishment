@@ -209,7 +209,6 @@ export default {
 
     goBack () {
       this.requestSuccess = true
-      alert('ASFASFuiaoshfaiUSFHIASUF World')
     },
 
     confirmOTP () {
