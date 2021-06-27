@@ -29,7 +29,6 @@
     </div>
   </q-page>
 </template>
-
 <style>
 </style>
 
@@ -38,7 +37,9 @@ import { firebaseDb } from 'src/boot/firebase'
 import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
   name: 'PageIndex',
-  components: { QrcodeStream },
+  components: {
+    QrcodeStream
+  },
   data () {
     return {
       isValid: undefined,

@@ -29,7 +29,7 @@
 
  <div class="column q-pa-md">
       <div class="row">
-        <q-card square class="shadow-24" style="width:300px;height:910px;">
+        <q-card square class="shadow-24" style="">
 
           <q-card-section class="bg-teal-10">
               <div class="q-pa-xs">
@@ -118,6 +118,12 @@
               @click="isPwd1 = !isPwd1"/>
           </template>
         </q-input>
+
+        <q-uploader
+        url="http://localhost:4444/upload"
+        color="teal-10"
+        label="Business Permit"
+        />
 
           <div class="q-pa-xs">
             <q-card-actions class="q-pa-sm flex flex-center">

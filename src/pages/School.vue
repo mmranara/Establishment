@@ -23,19 +23,23 @@
 
         <div class="row">
         <div class="q-pa-xs">
-        <q-input
+          <q-select
+            color="teal"
             bg-color="grey-4"
-            filled
+            filled style=" width:270px;"
             v-model="formData.time_in"
-            label="Time In *"
-          /></div>
+            :options="options"
+            label="Time In *"/>
+            </div>
         <div class="q-pa-xs">
-        <q-input
+        <q-select
+            color="teal"
             bg-color="grey-4"
-            filled
+            filled style=" width:270px;"
             v-model="formData.time_out"
-            label="Time Out *"
-          /></div>
+            :options="options"
+            label="Time Out *"/>
+          </div>
         </div>
 
         <q-input
@@ -71,6 +75,9 @@ export default {
   name: 'SignupPage.vue',
   data () {
     return {
+      options: [
+        '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM'
+      ],
       result: null,
       step: 1,
       formData: {
