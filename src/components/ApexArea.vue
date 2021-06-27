@@ -4,7 +4,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { firebaseDb } from 'src/boot/firebase'
 export default {
   name: 'ApexArea',
   props: ['username', 'dataA'],
