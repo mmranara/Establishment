@@ -29,7 +29,7 @@
 
  <div class="column q-pa-md">
       <div class="row">
-        <q-card square class="shadow-24" style="width:300px;height:910px;">
+        <q-card square class="shadow-24" style="">
 
           <q-card-section class="bg-teal-10">
               <div class="q-pa-xs">
@@ -42,6 +42,7 @@
                   class="q-gutter-md">
 
           <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.name"
@@ -51,6 +52,7 @@
           />
 
             <q-select
+            color="teal"
             bg-color="grey-4"
             filled style=" width:270px;"
             v-model="formData.type"
@@ -58,6 +60,7 @@
             label="Establishment Type *"/>
 
         <q-select
+            color="teal"
             bg-color="grey-4"
             filled style=" width:270px;"
             v-model="formData.level"
@@ -65,6 +68,7 @@
             label="Level *"/>
 
            <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.contact"
@@ -75,6 +79,7 @@
         />
 
          <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.contact1"
@@ -85,6 +90,7 @@
         />
 
        <q-input
+        color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.address"
@@ -95,6 +101,7 @@
          />
 
         <q-input
+            color="teal"
             bg-color="grey-4"
             filled
             v-model="formData.email"
@@ -103,7 +110,7 @@
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
 
-        <q-input bg-color="grey-4" v-model="formData.password" filled :type="isPwd1 ? 'password' : 'text'" label="Password *" hint="Combination of letters & numbers">
+        <q-input color="teal" bg-color="grey-4" v-model="formData.password" filled :type="isPwd1 ? 'password' : 'text'" label="Password *" hint="Combination of letters & numbers">
           <template v-slot:append>
             <q-icon
               :name="isPwd1 ? 'visibility_off' : 'visibility'"
@@ -111,6 +118,12 @@
               @click="isPwd1 = !isPwd1"/>
           </template>
         </q-input>
+
+        <q-uploader
+        url="http://localhost:4444/upload"
+        color="teal-10"
+        label="Business Permit"
+        />
 
           <div class="q-pa-xs">
             <q-card-actions class="q-pa-sm flex flex-center">
@@ -124,8 +137,8 @@
               class="text-white"
               label="Continue"
             />
-
             <q-btn to="/" style="width:100px;height:40px;" flat unelevated size="md" label="Back" />
+            <div id="recaptcha-container"></div>
             </q-card-actions>
            </div>
           </q-form>
@@ -133,17 +146,49 @@
        </q-card>
       </div>
     </div>
+
+    <q-dialog v-model="otpConfirm" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Enter OTP</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="otpCode" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Enter" @click="confirmOTP()" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="requestSuccess" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Request Successfull</div>
+          <div class="text-h7">You will be updated via sms for your request</div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn color="teal" flat label="Return" @click="$router.replace('/')" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
 </q-page>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
+import { firebaseAuth, firebaseDb, firebase } from 'src/boot/firebase'
 export default {
   name: 'SignupPage.vue',
   data () {
     return {
       step: 1,
+      otpConfirm: false,
+      otpCode: '',
       formData: {
         name: '',
         type: '',
@@ -156,6 +201,7 @@ export default {
       },
       isPwd1: true,
       select: null,
+      requestSuccess: false,
       options: [
         'Mall', 'Bank', 'Church', 'City Hall', 'School', 'Market', 'Supermarket', 'Department Store', 'Convenience Store', 'Hotel', 'Hospital', 'Government Office', 'Restaurant', 'Pharmacy/Drugstore', 'Other'
       ],
@@ -166,10 +212,54 @@ export default {
     }
   },
   methods: {
-    ...mapActions('store', ['registerUser']),
+
+    goBack () {
+      this.requestSuccess = true
+    },
+
+    confirmOTP () {
+      window.confirmationResult.confirm(this.otpCode).then((result) => {
+        // User signed in successfully.
+        // this.registerUser(this.formData)
+        firebaseDb.ref('requests').push({
+          name: this.formData.name,
+          type: this.formData.type,
+          level: this.formData.level,
+          contact: this.formData.contact,
+          contact1: this.formData.contact1,
+          address: this.formData.address,
+          password: this.formData.password,
+          email: this.formData.email
+        })
+        this.goBack()
+        // ...
+      }).catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+        alert(error)
+      })
+    },
     onSubmit () {
-      this.registerUser(this.formData)
+      const phoneNumber = '+63' + this.formData.contact
+      alert(phoneNumber)
+      const appVerifier = window.recaptchaVerifier
+      firebaseAuth.signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult
+          alert('SMS sent')
+          this.otpConfirm = true
+          // ...
+        }).catch((error) => {
+          alert(error)
+        })
+      // this.registerUser(this.formData)
     }
+  },
+  mounted () {
+    firebaseAuth.useDeviceLanguage()
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
   }
 }
 </script>

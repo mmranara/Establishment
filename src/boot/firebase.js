@@ -17,8 +17,7 @@ var firebaseConfig = {
   measurementId: 'G-PVN8W6C5V8'
 }
 // Initialize Firebase
-let firebaseApp = firebase.initializeApp(firebaseConfig)
-let firebaseAuth = firebaseApp.auth()
-let firebaseDb = firebaseApp.database()
-
-export { firebaseAuth, firebaseDb }
+firebase.initializeApp(firebaseConfig)
+let firebaseAuth = firebase.auth()
+let firebaseDb = firebase.database()
+export { firebase, firebaseAuth, firebaseDb }

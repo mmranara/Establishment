@@ -16,7 +16,7 @@
           <q-img src="~assets/logo.png" style="width:40px"></q-img>
         </q-toolbar-title>
 
-                <q-btn
+        <q-btn
             outline
             rounded
             v-if="!userDetails.userId"
@@ -47,7 +47,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       :width="220"
-   >
+    >
       <q-list>
         <q-item clickable class="bg-teal-10" style="height:50px;">
           <q-item-section class="text-grey-3">
@@ -56,7 +56,7 @@
           <q-img src="~assets/lol.png" class="menu-image absolute-top"  />
         </q-item>
 
-        <q-item clickable to="/index" exact>
+        <q-item v-if="userDetails.type != 'School'" clickable to="/index" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="camera_alt" />
           </q-item-section>
@@ -66,17 +66,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/stat" exact>
-          <q-item-section avatar>
-            <q-icon name="poll" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Statistics</q-item-label>
-            <q-item-label caption></q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable to="/school" exact>
+        <q-item v-else clickable to="/school" exact active-class="text-teal">
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>
@@ -86,12 +76,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable to="/draft" exact>
+        <q-item clickable to="/stat" exact active-class="text-teal">
           <q-item-section avatar>
-            <q-icon name="papers" />
+            <q-icon name="poll" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Draft</q-item-label>
+            <q-item-label>Statistics</q-item-label>
             <q-item-label caption></q-item-label>
           </q-item-section>
         </q-item>
@@ -121,7 +111,6 @@ export default {
   methods: {
     ...mapActions('store', ['logoutUser'])
   }
-
 }
 </script>
 

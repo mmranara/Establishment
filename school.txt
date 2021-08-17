@@ -1,0 +1,119 @@
+firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Adrian Charity',
+      age: 48,
+      address: 'Iligan City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Carl Gauss',
+      age: 12,
+      address: 'Pagadian City',
+      contact: '09123525812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Jose Rizal',
+      age: 78,
+      address: 'Laguna Park',
+      contact: '09321425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Jung Coke',
+      age: 18,
+      address: 'Africa Mafrika',
+      contact: '09123451212',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Michael Reeee',
+      age: 7,
+      address: 'Heartnimo Del Norte',
+      contact: '09123425128',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Titanium Alloy',
+      age: 23,
+      address: 'Steeltown Iligan City',
+      contact: '09125425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Mei San',
+      age: 20,
+      address: 'Pagadian City',
+      contact: '09143426812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Cool Kid',
+      age: 32,
+      address: 'Canada Del Sur',
+      contact: '09213425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Among Gus',
+      age: 16,
+      address: 'Blight Town',
+      contact: '09121245812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Daniel Maycry',
+      age: 23,
+      address: 'Iligan City',
+      contact: '09321425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/hxs2enq2CqSB1ii60ZdeIvUioj72/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Faye Daniela',
+      age: 20,
+      address: 'Krusty Crabs',
+      contact: '09154235812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
+    firebaseDb.ref('users/-Md14x4c92H-d-CWFhDR/rooms/-Md14x4c92H-d-CWFhDR/students').push({
+      name: 'Kenan City',
+      age: 20,
+      address: 'Manila City',
+      contact: '09123425812',
+      date: Date.now()
+    })
