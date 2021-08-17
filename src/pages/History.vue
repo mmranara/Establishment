@@ -50,33 +50,11 @@
     >
       <q-card style="width: 300px">
         <q-card-section class="justify-center">
-          <div class="text-h6">Added</div>
+          <div class="text-h6">    </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-list>
-
-            <q-item>
-              <q-item-section>{{ 'Name: ' + result[0] }}</q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section>{{ 'Age: ' + result[1] }}</q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section>{{ 'Address: ' + result[2] }}</q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section>{{ 'Contact Number: ' + result[3] }}</q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section>{{ 'Covid Status: ' + result[4] }}</q-item-section>
-            </q-item>
-
-          </q-list>
+          <div color="teal" class="text-h6">USER ADDED</div>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
