@@ -52,6 +52,20 @@
         </q-card>
       </div>
     </div>
+
+    <q-dialog v-model="popup" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Request Successfull</div>
+          <div class="text-h7">You will be updated via sms for your request</div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn color="teal" flat label="Return" @click="$router.replace('/')" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -62,6 +76,12 @@ export default {
   name: 'LoginPage.vue',
   data () {
     return {
+      getCookie (name) {
+        const value = `; ${document.cookie}`
+        const parts = value.split(`; ${name}=`)
+        if (parts.length === 2) return parts.pop().split(';').shift()
+      },
+      popup: '',
       formData: {
         email: '',
         password: ''
@@ -74,6 +94,11 @@ export default {
     onSubmit () {
       this.loginUser(this.formData)
     }
+  },
+
+  mounted () {
+    this.popup = Boolean(this.getCookie('requestAccess'))
+    document.cookie.split(';').forEach(function (c) { document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/') })
   }
   // mounted () {
   //   firebaseDb.ref('requests').push({

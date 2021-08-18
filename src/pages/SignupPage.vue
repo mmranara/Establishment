@@ -2,7 +2,7 @@
 <q-page class="bg-teal window-height:100% row justify-center items center ">
   <q-img src="~assets/lolz.jpg" class="menu-image fixed-center" />
     <q-stepper
-    style="width:100%;height:55px"
+    style="width:500%;height:55px"
       v-model="step"
       ref="stepper"
       alternative-labels
@@ -27,13 +27,14 @@
       </q-step>
     </q-stepper>
 
- <div class="column q-pa-md">
-      <div class="row">
+ <div class="column q-pa-md" style="margin-left: 25%">
+      <div class="row q-ma-xl">
+        <div class = "row justify-end">
         <q-card square class="shadow-24" style="">
-
-          <q-card-section class="bg-teal-10">
-              <div class="q-pa-xs">
-        <q-img src="~assets/z.png"/></div>
+        <q-card-section class="bg-teal-10">
+      <div class="q-pa-xs">
+        <q-img src="~assets/z.png"/>
+      </div>
           </q-card-section>
 
           <q-card-section>
@@ -129,7 +130,7 @@
             <q-card-actions class="q-pa-sm flex flex-center">
 
             <q-btn
-              style="width:100px;height:40px;"
+              style="width:400px;height:40px;"
               type="submit"
               unelevated
               size="md"
@@ -137,13 +138,65 @@
               class="text-white"
               label="Continue"
             />
-            <q-btn to="/" style="width:100px;height:40px;" flat unelevated size="md" label="Back" />
+            <q-btn to="/" style="width:400px;height:40px;" flat unelevated size="md" label="Back" />
             <div id="recaptcha-container"></div>
             </q-card-actions>
            </div>
           </q-form>
          </q-card-section>
        </q-card>
+       <div style="margin-top: 30%" class=" q-ma-xl">
+         <q-card>
+           <div style="color: #004d40" class="text-h6 text-weight-bold q-ml-xs q-pl-sm q-pt-sm">Types of Level</div>
+          <q-list>
+            <div style="color: #004d40" class="text-h7 text-weight-bold q-ml-xs q-pl-sm q-pt-sm">Establishment </div>
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level I</q-item-label>
+                  <q-item-label caption lines="2">Mall</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level II</q-item-label>
+                  <q-item-label caption lines="2">Department Store, Restaurant</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level III</q-item-label>
+                  <q-item-label caption lines="2">Small stores inside Mall, Food Stalls and etc.</q-item-label>
+                </q-item-section>
+              </q-item>
+
+            <div style="color: #004d40" class="text-h7 text-weight-bold q-ml-xs q-pl-sm q-pt-sm">School </div>
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level I</q-item-label>
+                  <q-item-label caption lines="2">Whole Campus or University</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level II</q-item-label>
+                  <q-item-label caption lines="2">Colleges inside the University</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Level III</q-item-label>
+                  <q-item-label caption lines="2">Rooms</q-item-label>
+                </q-item-section>
+              </q-item>
+
+            </q-list>
+          </q-card>
+       </div>
+       </div>
       </div>
     </div>
 
@@ -163,25 +216,12 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-
-    <q-dialog v-model="requestSuccess" persistent>
-      <q-card style="min-width: 350px">
-        <q-card-section>
-          <div class="text-h6">Request Successfull</div>
-          <div class="text-h7">You will be updated via sms for your request</div>
-        </q-card-section>
-
-        <q-card-actions align="right" class="text-primary">
-          <q-btn color="teal" flat label="Return" @click="$router.replace('/')" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
 </q-page>
 </template>
 
 <script>
 import { firebaseAuth, firebaseDb, firebase } from 'src/boot/firebase'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'SignupPage.vue',
   data () {
@@ -201,7 +241,7 @@ export default {
       },
       isPwd1: true,
       select: null,
-      requestSuccess: false,
+      requestSuccess: true,
       options: [
         'Mall', 'Bank', 'Church', 'City Hall', 'School', 'Market', 'Supermarket', 'Department Store', 'Convenience Store', 'Hotel', 'Hospital', 'Government Office', 'Restaurant', 'Pharmacy/Drugstore', 'Other'
       ],
@@ -212,6 +252,8 @@ export default {
     }
   },
   methods: {
+
+    ...mapActions('store', ['logoutUser']),
 
     goBack () {
       this.requestSuccess = true
@@ -232,6 +274,8 @@ export default {
           email: this.formData.email
         })
         this.goBack()
+        document.cookie = 'requestAccess = true'
+        this.logoutUser()
         // ...
       }).catch((error) => {
         // User couldn't sign in (bad verification code?)
